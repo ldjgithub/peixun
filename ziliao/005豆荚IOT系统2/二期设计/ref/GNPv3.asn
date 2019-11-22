@@ -1,0 +1,58 @@
+GeneratedSchema DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+GNPC1t ::= SEQUENCE {
+    protocolVersion INTEGER(3),
+    messageType INTEGER(1),
+    terminalID OCTET STRING(SIZE(16)),
+    ecdhPublicKeyC OCTET STRING(SIZE(64)), -- p256r1, x||y 
+    challengeC OCTET STRING(SIZE(16)),
+    signature OCTET STRING(SIZE(256))
+}
+
+GNPS1t ::= SEQUENCE {
+    protocolVersion INTEGER(3),
+    messageType INTEGER(2),
+	status INTEGER,
+    terminalID OCTET STRING(SIZE(16)),
+    ecdhPublicKeyS OCTET STRING(SIZE(64)),
+    challengeC OCTET STRING(SIZE(16)),
+	challengeS OCTET STRING(SIZE(16)),
+    signature OCTET STRING(SIZE(256))
+}
+ 
+GNPC2t ::= SEQUENCE {
+    protocolVersion INTEGER(3),
+    messageType INTEGER(3),
+	status INTEGER,
+    terminalID OCTET STRING(SIZE(16)),
+	challengeS OCTET STRING(SIZE(16)),
+    mac OCTET STRING(SIZE(32))
+}
+
+GNPS2t ::= SEQUENCE {
+    protocolVersion INTEGER(3),
+    messageType INTEGER(3),
+	terminalID OCTET STRING(SIZE(16)),
+	status INTEGER,
+    mac OCTET STRING(SIZE(32))
+}
+ 
+GNPDataPlaint ::= SEQUENCE {
+	pTBuffer OCTET STRING(SIZE(1..1024)) --AES-CBC manual padding: must be paddinged with 00 align size is 16. 
+}
+GNPDatat ::= SEQUENCE {
+	protocolVersion INTEGER(3),
+    messageType INTEGER(3),
+	status INTEGER,
+	terminalID OCTET STRING(SIZE(16)),
+	iv OCTET STRING(SIZE(16)),
+	pTLength INTEGER(1..1024),
+	cTBuffer OCTET STRING(SIZE(16..1024)),
+	mac OCTET STRING(SIZE(32))
+}
+
+
+END
+
+ 
+
+ 
